@@ -132,7 +132,7 @@ def display_orders_dataframe(orders):
         df = pd.DataFrame(orders, columns=["Department", "Name", "Email", "Product", "Quantity", "is_locked","Timestamp"])
         df=df.drop(["is_locked"],axis=1)
         st.write("\n**Total Orders:**")
-        st.write(df)
+        st.dataframe(df, height=500, width=1000)
     else:
         st.write("No orders available.")
 def does_table_exist(table_name):
@@ -177,7 +177,7 @@ def admin_view_update_orders(product_list):
         df=df.drop(["is_locked"],axis=1)
         total_quantity_df = df.groupby("Product")["Quantity"].sum().reset_index()
         st.write("\n**Total Quantity of Products Order:**")
-        st.write(total_quantity_df)
+        st.dataframe(total_quantity_df, height=425, width=1000)
         ordd = pd.DataFrame(all_orders, columns=["Department", "Name", "Email", "Product", "Quantity", "is_locked","Timestamp"])
         ordd=ordd.drop(["is_locked"],axis=1)
         display_orders_dataframe(all_orders)
@@ -273,15 +273,14 @@ if choice=="Login":
                     else:
                         product_result = view_all_product()
                         product_db = pd.DataFrame(product_result,columns=["Product","Price"])
-                        st.dataframe(product_db)    
+                        st.dataframe(product_db,height=200, width=1000)    
                         admin_view_update_orders(product_db["Product"])
                 else:
                     st.text("Product List")
                     create_producttable()
                     product_result = view_all_product()
                     product_db = pd.DataFrame(product_result,columns=["Product","Price"])
-                    st.dataframe(product_db)
-                    #st.write(dd["Department"][0],dd["FirstName"][0])
+                    st.dataframe(product_db,height=200, width=1000)
                     main(dd["Department"][0],dd["FirstName"][0], Email,product_db["Product"])
             else:
                 if dept=="Admin":
